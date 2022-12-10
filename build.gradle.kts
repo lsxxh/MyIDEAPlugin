@@ -83,15 +83,16 @@ tasks {
             }.joinToString("\n").let { markdownToHTML(it) }
         )
 
+        // 初次clone下来buildPlugin时此Task(changelog)报错，注释掉后就可在<Root>/build/libs/下找到编好的jar包
         // Get the latest available change notes from the changelog file
-        changeNotes.set(provider {
-            with(changelog) {
-                renderItem(
-                    getOrNull(properties("pluginVersion")) ?: getLatest(),
-                    Changelog.OutputType.HTML,
-                )
-            }
-        })
+//        changeNotes.set(provider {
+//            with(changelog) {
+//                renderItem(
+//                    getOrNull(properties("pluginVersion")) ?: getLatest(),
+//                    Changelog.OutputType.HTML,
+//                )
+//            }
+//        })
     }
 
     // Configure UI tests plugin

@@ -1,12 +1,13 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.lsxxh.myideaplugin</id>
-    <name>IntelliJ Platform Plugin MyIDEAPlugin</name>
+    <name>MyIDEAPlugin</name>
     <vendor>lsxxh</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="Custom Notification Group INFORMATION" displayType="BALLOON" />
         <applicationService serviceImplementation="com.github.lsxxh.myideaplugin.services.MyApplicationService"/>
         <projectService serviceImplementation="com.github.lsxxh.myideaplugin.services.MyProjectService"/>
     </extensions>
@@ -15,4 +16,11 @@
         <listener class="com.github.lsxxh.myideaplugin.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
+    <actions>
+        <action id="PxToDpAction" class="action.PxToDpAction" text="PxToDpAction"
+                description="Px to dp">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt C" second-keystroke="alt C"/>
+        </action>
+    </actions>
 </idea-plugin>
