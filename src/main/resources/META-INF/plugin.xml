@@ -10,6 +10,7 @@
         <notificationGroup id="Custom Notification Group INFORMATION" displayType="BALLOON" />
         <applicationService serviceImplementation="com.github.lsxxh.myideaplugin.services.MyApplicationService"/>
         <projectService serviceImplementation="com.github.lsxxh.myideaplugin.services.MyProjectService"/>
+        <applicationConfigurable instance="com.github.lsxxh.myideaplugin.settings.SettingConfig" displayName="Px to Dp" id="px2dpSettings" groupId="root" />
     </extensions>
 
     <applicationListeners>
