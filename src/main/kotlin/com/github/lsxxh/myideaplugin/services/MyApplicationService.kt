@@ -3,7 +3,6 @@ package com.github.lsxxh.myideaplugin.services
 import com.github.lsxxh.myideaplugin.MyBundle
 
 class MyApplicationService {
-
     init {
         println(MyBundle.message("applicationService"))
 

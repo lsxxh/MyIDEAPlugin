@@ -9,6 +9,8 @@ import java.util.regex.Pattern
 
 
 object FormatTools{
+    private var preset_density_scale = 0.5
+
     /**
      * 格式化光标处往前最近的一个可格化的长度
      *
@@ -36,19 +38,19 @@ object FormatTools{
 /**
  * 格式化指定的style文本
  *
- * @param style           style文本
+ * @param content           style文本
  * @param position        起止index
  * @param actionPerformer 动作参数
  */
-private fun formatText(style: String, position: Array<Int>, actionPerformer: ActionPerformer) {
+private fun formatText(content: String, position: Array<Int>, actionPerformer: ActionPerformer) {
     //filter所要求的写法FormatTools::isNumeric要求一个类文件，顶层文件不行
-    Optional.of(style).filter(FormatTools::isNumeric).ifPresent {
+    Optional.of(content).filter(FormatTools::isNumeric).ifPresent {
         WriteCommandAction.runWriteCommandAction(actionPerformer.project) {
             actionPerformer.document?.replaceString(
                 position[0],
                 position[1],
                 //成功调用formatNearCode测试将: xx="5px=>xx="50dp
-                style + "0" + "dp"
+                (content.toInt() * preset_density_scale).toInt().toString() + "dp\""
             )
         }
 
