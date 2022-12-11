@@ -1,0 +1,33 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.github.lsxxh.myideaplugin</id>
+    <name>MyIDEAPlugin</name>
+    <vendor>lsxxh</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="Custom Notification Group INFORMATION" displayType="BALLOON" />
+        <!--将模板plugin.xml中默认配置的applicationService改为继承了PersistentStateComponent<PreferenceVariant>的PreferenceVariant
+        后才成功在settings中显示UI-->
+        <!--<applicationService serviceImplementation="com.github.lsxxh.myideaplugin.services.MyApplicationService"/>-->
+        <applicationService
+                serviceImplementation="com.github.lsxxh.myideaplugin.settings.PreferenceVariant"
+                serviceInterface="com.github.lsxxh.myideaplugin.settings.PreferenceVariant"
+        />
+        <projectService serviceImplementation="com.github.lsxxh.myideaplugin.services.MyProjectService"/>
+        <applicationConfigurable instance="com.github.lsxxh.myideaplugin.settings.SettingConfig" displayName="Px to Dp" id="px2dpSettings" groupId="root" />
+    </extensions>
+
+    <applicationListeners>
+        <listener class="com.github.lsxxh.myideaplugin.listeners.MyProjectManagerListener"
+                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
+    </applicationListeners>
+    <actions>
+        <action id="PxToDpAction" class="action.PxToDpAction" text="PxToDpAction"
+                description="Px to dp">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift P" second-keystroke="ctrl alt P"/>
+        </action>
+    </actions>
+</idea-plugin>

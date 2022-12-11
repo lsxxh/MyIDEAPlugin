@@ -39,7 +39,6 @@ object SettingConfig : SearchableConfigurable{
     }
 
     override fun getId(): String {
-        //return displayName
-        return "px2dpSettings"
+        return displayName
     }
 }
