@@ -4,14 +4,14 @@ import com.github.lsxxh.myideaplugin.settings.PreferenceVariant;
 
 import javax.swing.*;
 
-/**与.form一同放在java目录下
+/**生成的实体类与.form一同放在java目录下
  * or java.lang.ClassNotFoundException: com.github.lsxxh.myideaplugin.settings.SettingsPage PluginClassLoader(...
  */
 public class SettingsPage {
     private JLabel Scale;
     private JLabel PresetDensityScale;
     private JSpinner ScaleSpinner;
-    private JPanel RootPanel;
+    private JPanel rootPanel;
 
     public JLabel getScale() {
         return Scale;
@@ -27,7 +27,7 @@ public class SettingsPage {
 
     public JPanel getRootPanel() {
         presetConfig();
-        return RootPanel;
+        return rootPanel;
     }
 
     private void presetConfig() {

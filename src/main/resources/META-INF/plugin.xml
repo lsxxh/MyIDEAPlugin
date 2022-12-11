@@ -8,7 +8,13 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="Custom Notification Group INFORMATION" displayType="BALLOON" />
-        <applicationService serviceImplementation="com.github.lsxxh.myideaplugin.services.MyApplicationService"/>
+        <!--将模板plugin.xml中默认配置的applicationService改为继承了PersistentStateComponent<PreferenceVariant>的PreferenceVariant
+        后才成功在settings中显示UI-->
+        <!--<applicationService serviceImplementation="com.github.lsxxh.myideaplugin.services.MyApplicationService"/>-->
+        <applicationService
+                serviceImplementation="com.github.lsxxh.myideaplugin.settings.PreferenceVariant"
+                serviceInterface="com.github.lsxxh.myideaplugin.settings.PreferenceVariant"
+        />
         <projectService serviceImplementation="com.github.lsxxh.myideaplugin.services.MyProjectService"/>
         <applicationConfigurable instance="com.github.lsxxh.myideaplugin.settings.SettingConfig" displayName="Px to Dp" id="px2dpSettings" groupId="root" />
     </extensions>

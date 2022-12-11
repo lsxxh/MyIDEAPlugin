@@ -2,7 +2,9 @@ package com.github.lsxxh.myideaplugin.services
 
 import com.intellij.openapi.project.Project
 import com.github.lsxxh.myideaplugin.MyBundle
-
+/**
+ * 模板生成的，暂时未用上
+ */
 class MyProjectService(project: Project) {
 
     init {
