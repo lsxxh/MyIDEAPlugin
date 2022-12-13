@@ -1,5 +1,6 @@
 package com.github.lsxxh.myideaplugin.completion
 
+import com.github.lsxxh.myideaplugin.helper.FormatTools
 import com.github.lsxxh.myideaplugin.services.MyProjectService
 import com.intellij.codeInsight.completion.*
 import com.intellij.codeInsight.lookup.LookupElement
@@ -20,8 +21,8 @@ class Px2DpCompletionContributor : CompletionContributor() {
         extend(
             CompletionType.BASIC,
             //PlatformPatterns.psiElement(XmlElementType.XML_ATTRIBUTE_VALUE).withLanguage(XMLLanguage.INSTANCE), //暂没反应
-            //PlatformPatterns.psiElement(IElementType("VALUE", XMLLanguage.INSTANCE)), //暂没反应
-            PlatformPatterns.psiElement(), //暂没反应
+            //PlatformPatterns.psiElement(IElementType("VALUE", XMLLanguage.INSTANCE)),
+            PlatformPatterns.psiElement(),
             object : CompletionProvider<CompletionParameters>() {
                 override fun addCompletions(
                     parameters: CompletionParameters,
@@ -55,9 +56,49 @@ class Px2DpCompletionContributor : CompletionContributor() {
     override fun fillCompletionVariants(parameters: CompletionParameters, result: CompletionResultSet) {
         super.fillCompletionVariants(parameters, result);	// 此result为通过extend添加的菜单项
         val offset = parameters.offset
+        val project = parameters.editor.project
+        val document = parameters.editor.document
+        val editor = parameters.editor
+        val caretModel = parameters.editor.caretModel
+        val lineStartOffset = document.getLineStartOffset(document.getLineNumber(offset))
+        val lineContent = document.getText(TextRange(lineStartOffset, offset))
+        MyProjectService.logger.warn("yyz, lineContent: $lineContent")
+        val quoteIdx = lineContent.indexOf('"')
+        val numStr = lineContent.substring(quoteIdx + 1)
+        MyProjectService.logger.warn("yyz, numStr: $numStr")
+        MyProjectService.logger.warn("yyz, prepare to addElement")
+        result.addElement(
+            LookupElementBuilder.create(numStr)
+                .withLookupString("p")
+                .withLookupString("px")
+                .withLookupString("pxd")
+                .withPresentableText("px -> dp")
+                .withCaseSensitivity(true)
+                .withInsertHandler { ctx, _: LookupElement ->
+                    val doc = ctx.document
+                    val endOffset = ctx.selectionEndOffset
+                    //此时在补全提示出来后按enter会输入: test px2dp enterInsert Test
+                    //doc.insertString(endOffset - numStr.length, "Insert Test")
+                    FormatTools.formatText(numStr, arrayOf(quoteIdx + 1, caretModel.offset), parameters)
+                }
+                .withTypeText("From Px2Dp")
+                .withItemTextForeground(Color.CYAN)
+                .bold()
+        )
+        //super.fillCompletionVariants(parameters, result)
+        MyProjectService.logger.warn("yyz, result: $result") //yyz, result: com.intellij.codeInsight.completion.impl.CompletionServiceImpl$CompletionResultSetImpl@61cc708b
+        MyProjectService.logger.warn("yyz, result str: ${result.myToString()}") //yyz, result str: this.prefixMatcher.toString(): 10px this.isStopped: false
+        WordCompletionContributor.addWordCompletionVariants(result, parameters, Collections.emptySet())
+        //result.stopHere()
+    }
+
+    // OK,初版
+    /*// 可在此处添加推荐菜单项，IDEA中每敲入一个字符，则会触发一次此方法
+    override fun fillCompletionVariants(parameters: CompletionParameters, result: CompletionResultSet) {
+        super.fillCompletionVariants(parameters, result);	// 此result为通过extend添加的菜单项
+        val offset = parameters.offset
         val document = parameters.editor.document
         val lineStartOffset = document.getLineStartOffset(document.getLineNumber(offset))
-        //val lineContent = document.getText(TextRange(lineStartOffset, offset))
         val lineContent = document.getText(TextRange(lineStartOffset, offset))
         MyProjectService.logger.warn("yyz, lineContent: $lineContent")
         //if (lineContent.endsWith('p') || lineContent.endsWith("px")) {
@@ -90,7 +131,7 @@ class Px2DpCompletionContributor : CompletionContributor() {
         WordCompletionContributor.addWordCompletionVariants(result, parameters, Collections.emptySet())
         //result.stopHere()
     }
-
+    */
     /*方法二(推荐)：使用fillCompletionVariants
     每次有变化时都会重新执行这个方法
     会将建议通过result.addElement方法添加

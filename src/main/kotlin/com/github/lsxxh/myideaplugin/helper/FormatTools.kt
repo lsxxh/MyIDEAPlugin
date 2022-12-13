@@ -3,8 +3,10 @@ package com.github.lsxxh.myideaplugin.helper
 import com.example.plugindemo.constvalue.ConstValue.CHAR_QUOTE
 import com.example.plugindemo.model.ActionPerformer
 import com.github.lsxxh.myideaplugin.settings.PreferenceVariant
+import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.diagnostic.Logger
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.TextRange
 import java.util.regex.Pattern
 import kotlin.properties.Delegates
@@ -95,6 +97,30 @@ object FormatTools{
         logger.warn("yyz, start: ${position[0]}, end: ${position[1]}")
         WriteCommandAction.runWriteCommandAction(actionPerformer.project) {
             actionPerformer.document?.replaceString(
+                position[0],
+                position[1],
+                //成功调用formatCaretBeforeCode测试将: xx="5px=>xx="50dp
+                (content.getNumericStr().toInt() * PreferenceVariant.presetScale).toInt().toString() + "dp\""
+            )
+        }
+        logger.warn("yyz, content.getNumericStr(): ${content.getNumericStr()}")
+        logger.warn("yyz, scale: ${PreferenceVariant.presetScale}")
+    }
+
+    /**
+     * 格式化指定的style文本
+     *
+     * @param content           style文本
+     * @param position        起止index
+     * @param project         parameters.editor.project/
+     *                        anActionEvent.project获取
+     */
+    fun formatText(content: String, position: Array<Int>, parameters: CompletionParameters) {
+        val project = parameters.editor.project
+        val document = parameters.editor.document
+        logger.warn("yyz, start: ${position[0]}, end: ${position[1]}")
+        WriteCommandAction.runWriteCommandAction(project) {
+            document.replaceString(
                 position[0],
                 position[1],
                 //成功调用formatCaretBeforeCode测试将: xx="5px=>xx="50dp
