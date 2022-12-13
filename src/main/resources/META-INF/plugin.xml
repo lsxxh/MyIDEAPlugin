@@ -16,7 +16,9 @@
                 serviceInterface="com.github.lsxxh.myideaplugin.settings.PreferenceVariant"
         />
         <projectService serviceImplementation="com.github.lsxxh.myideaplugin.services.MyProjectService"/>
-        <applicationConfigurable instance="com.github.lsxxh.myideaplugin.settings.SettingConfig" displayName="Px to Dp" id="px2dpSettings" groupId="root" />
+        <applicationConfigurable instance="com.github.lsxxh.myideaplugin.settings.SettingSearchableConfigurable" displayName="Px to Dp" id="px2dpSettings" groupId="root" />
+        <!--由XHTML改为XML,根据打印看到contributor可以被调用了-->
+        <completion.contributor language="XML" implementationClass="com.github.lsxxh.myideaplugin.completion.Px2DpCompletionContributor" order="first"/>
     </extensions>
 
     <applicationListeners>

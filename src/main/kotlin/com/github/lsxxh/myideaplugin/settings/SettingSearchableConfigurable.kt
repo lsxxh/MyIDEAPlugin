@@ -7,7 +7,7 @@ import java.util.*
 import java.util.function.Predicate
 import javax.swing.JComponent
 
-object SettingConfig : SearchableConfigurable{
+object SettingSearchableConfigurable : SearchableConfigurable{
     private lateinit var mainGUI: SettingsPage
 
     override fun createComponent(): JComponent? {
