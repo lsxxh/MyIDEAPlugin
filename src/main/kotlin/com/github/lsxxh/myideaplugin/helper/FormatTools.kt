@@ -8,6 +8,7 @@ import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.util.TextRange
 import java.util.regex.Pattern
+import kotlin.math.roundToInt
 
 
 private fun String.getNumericStr(): String {
@@ -125,8 +126,8 @@ object FormatTools{
                 //注:关于1/3(0.33)时转换小1<=kotlin中交互式运行>>> (9 * 0.33).toInt()//2
                 //(9 * 0.33).roundToInt() //import kotlin.math.roundToInt
                 //round(2.97) //Should be replaced with Kotlin function roundToInt =>2.97.roundToInt()
-                //换了roundToInt也一样
-                (content.getNumericStr().toInt() * PreferenceVariant.presetScale).toInt().toString() + "dp\""
+                //-换了roundToInt也一样.再测Float.roundToInt() OK,解决前述2.97.toInt() = 2问题
+                (content.getNumericStr().toInt() * PreferenceVariant.presetScale).roundToInt().toString() + "dp\""
             )
         }
         logger.warn("yyz, content.getNumericStr(): ${content.getNumericStr()}")
