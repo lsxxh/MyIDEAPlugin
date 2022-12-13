@@ -5,11 +5,8 @@ import com.github.lsxxh.myideaplugin.services.MyProjectService
 import com.intellij.codeInsight.completion.*
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.lang.xml.XMLLanguage
 import com.intellij.openapi.util.TextRange
 import com.intellij.patterns.PlatformPatterns
-import com.intellij.psi.tree.IElementType
-import com.intellij.psi.xml.XmlElementType
 import com.intellij.util.ProcessingContext
 import java.awt.Color
 import java.util.*
@@ -63,8 +60,8 @@ class Px2DpCompletionContributor : CompletionContributor() {
         val lineStartOffset = document.getLineStartOffset(document.getLineNumber(offset))
         val lineContent = document.getText(TextRange(lineStartOffset, offset))
         MyProjectService.logger.warn("yyz, lineContent: $lineContent")
-        val quoteIdx = lineContent.indexOf('"')
-        val numStr = lineContent.substring(quoteIdx + 1)
+        val quoteIdxInCurLine = lineContent.indexOf('"')
+        val numStr = lineContent.substring(quoteIdxInCurLine + 1)
         MyProjectService.logger.warn("yyz, numStr: $numStr")
         MyProjectService.logger.warn("yyz, prepare to addElement")
         result.addElement(
@@ -79,7 +76,12 @@ class Px2DpCompletionContributor : CompletionContributor() {
                     val endOffset = ctx.selectionEndOffset
                     //此时在补全提示出来后按enter会输入: test px2dp enterInsert Test
                     //doc.insertString(endOffset - numStr.length, "Insert Test")
-                    FormatTools.formatText(numStr, arrayOf(quoteIdx + 1, caretModel.offset), parameters)
+                    //OK,但插入位置不对
+                    //FormatTools.formatText(numStr, arrayOf(quoteIdx + 1, caretModel.offset), parameters)
+                    FormatTools.formatText(numStr, arrayOf(lineStartOffset + quoteIdxInCurLine + 1, caretModel.offset), parameters)
+                    //解决在AS中编辑时默认创建了一对引号(输左引号时就自动补且居中)填入内容后引号重复
+                    //插入后: ..."5dp"|"删除(doc.replaceString)最后的"即可,同时光标也再在了最后
+                    doc.replaceString(caretModel.offset, caretModel.offset + 1, "")
                 }
                 .withTypeText("From Px2Dp")
                 .withItemTextForeground(Color.CYAN)
