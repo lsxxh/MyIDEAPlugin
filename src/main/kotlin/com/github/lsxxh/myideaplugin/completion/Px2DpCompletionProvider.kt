@@ -1,7 +1,7 @@
 package com.github.lsxxh.myideaplugin.completion
 
-import com.example.plugindemo.constvalue.ConstValue.PX_TO_DP
-import com.example.plugindemo.constvalue.ConstValue.TO_TIPS
+import com.github.lsxxh.myideaplugin.constvalue.ConstValue.PX_TO_DP
+import com.github.lsxxh.myideaplugin.constvalue.ConstValue.TO_TIPS
 import com.example.plugindemo.model.ActionPerformer
 import com.github.lsxxh.myideaplugin.helper.FormatTools
 import com.github.lsxxh.myideaplugin.services.MyProjectService

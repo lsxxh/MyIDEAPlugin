@@ -1,6 +1,5 @@
 package com.example.plugindemo.model
 
-import com.example.plugindemo.constvalue.ConstValue
 import com.intellij.openapi.editor.CaretModel
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor

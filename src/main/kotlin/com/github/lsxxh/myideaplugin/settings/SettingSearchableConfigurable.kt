@@ -1,6 +1,6 @@
 package com.github.lsxxh.myideaplugin.settings
 
-import com.example.plugindemo.constvalue.ConstValue
+import com.github.lsxxh.myideaplugin.constvalue.ConstValue
 import com.intellij.openapi.options.SearchableConfigurable
 import settings.SettingsPage
 import java.util.*

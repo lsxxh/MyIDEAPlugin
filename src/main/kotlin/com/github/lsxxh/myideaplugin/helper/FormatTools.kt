@@ -1,15 +1,13 @@
 package com.github.lsxxh.myideaplugin.helper
 
-import com.example.plugindemo.constvalue.ConstValue.CHAR_QUOTE
+import com.github.lsxxh.myideaplugin.constvalue.ConstValue.CHAR_QUOTE
 import com.example.plugindemo.model.ActionPerformer
 import com.github.lsxxh.myideaplugin.settings.PreferenceVariant
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.diagnostic.Logger
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.TextRange
 import java.util.regex.Pattern
-import kotlin.properties.Delegates
 
 
 private fun String.getNumericStr(): String {
@@ -124,6 +122,10 @@ object FormatTools{
                 position[0],
                 position[1],
                 //成功调用formatCaretBeforeCode测试将: xx="5px=>xx="50dp
+                //注:关于1/3(0.33)时转换小1<=kotlin中交互式运行>>> (9 * 0.33).toInt()//2
+                //(9 * 0.33).roundToInt() //import kotlin.math.roundToInt
+                //round(2.97) //Should be replaced with Kotlin function roundToInt =>2.97.roundToInt()
+                //换了roundToInt也一样
                 (content.getNumericStr().toInt() * PreferenceVariant.presetScale).toInt().toString() + "dp\""
             )
         }

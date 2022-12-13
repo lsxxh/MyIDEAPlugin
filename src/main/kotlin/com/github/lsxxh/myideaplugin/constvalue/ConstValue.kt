@@ -1,4 +1,4 @@
-package com.example.plugindemo.constvalue
+package com.github.lsxxh.myideaplugin.constvalue
 
 object ConstValue {
     const val PLUGIN_NAME = "Px2Dp"
