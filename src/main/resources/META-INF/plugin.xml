@@ -29,7 +29,7 @@
         <action id="PxToDpAction" class="action.PxToDpAction" text="PxToDpAction"
                 description="Px to dp">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift P" second-keystroke="ctrl alt P"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt A" second-keystroke="ctrl shift alt D"/>
         </action>
     </actions>
 </idea-plugin>

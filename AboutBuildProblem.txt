@@ -1,0 +1,4 @@
+项目OK,偶尔会突然报 kotlin not configure,更易发生在改了项目的一些配置后，
+	解决：
+	1.本次是通过点击提示配置，在build.gradle.kts中删除生成的plugins{...}中最后一行（重复），其他保留，sync
+	2.之前是点提示配置，然后撤销，sync,多试几次

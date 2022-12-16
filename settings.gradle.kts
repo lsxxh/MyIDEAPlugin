@@ -1,1 +1,1 @@
-rootProject.name = "MyIDEAPlugin"
+rootProject.name = "Px2DpIntellijPlugin"
